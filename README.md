@@ -25,6 +25,7 @@ Q, K, V的维度都是 [batch_size, seq_length, embed_dim]
 
 ## Multi-Head Attention
 ![img5](./imgs/005.png)
+
 和单头的区别：
 使用多组不同的线性投影（权重矩阵），将输入x投影到多个不同的子空间中。
 每个头都有自己的QKV
