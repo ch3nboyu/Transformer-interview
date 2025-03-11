@@ -1,13 +1,13 @@
 # Transformer-interview
 Transformer面试常见八股
 # Transformer
-![图片](https://docimg4.docs.qq.com/image/AgAALDBw6Sv4NRP2cTtK25WFNbZNIIv7.png?w=1520&h=2239)
+![img1](./imgs/001.png)
 
 ## Positional Encoding
 由于自注意力机制是对所有输入元素进行加权求和，它无法区分序列中元素的顺序。因此需要位置编码来为输入序列中的每个位置添加位置信息
 ### 位置编码的形式
 在论文中，位置编码使用正弦和余弦函数来生成，是一个与词嵌入维度相同的向量：
-![图片](https://docimg7.docs.qq.com/image/AgAALDBw6SuSYRTGIUxGq7mWpFjsNhXn.png?w=1071&h=209)
+![img2](./imgs/002.png)
 - pos是序列中的位置（从0开始）
 - i是维度索引（从0开始）
 - dmodel​是词嵌入的维度
@@ -15,17 +15,16 @@ Transformer面试常见八股
 可学习的位置编码、相对位置编码、旋转位置编码（RoPE）
 
 ## Attention
-![图片](https://docimg9.docs.qq.com/image/AgAALDBw6SuTxLRgLqxNi7zgmYhxUqbM.png?w=445&h=884)
-
+![img3](./imgs/003.png)
 1. 输入：x维度为[batch_size, seq_length, embed_dim]
 2. 线性投影：将输入x，分别乘以w_q, w_k, w_v，生成Q、K、V
 其中，w的维度都是 [batch_size, embed_dim, embed_dim]
 Q, K, V的维度都是 [batch_size, seq_length, embed_dim]
 3. 计算注意力：
-![图片](https://docimg7.docs.qq.com/image/AgAALDBw6StN8064dYtCZLMZJIn0G9Fm.svg?w=300&h=150)
+![img4](./imgs/004.png)
 
 ## Multi-Head Attention
-![图片](https://docimg4.docs.qq.com/image/AgAALDBw6SvfJ57RJ4hEWbDwUKr77mae.png?w=835&h=1282)
+![img5](./imgs/005.png)
 和单头的区别：
 使用多组不同的线性投影（权重矩阵），将输入x投影到多个不同的子空间中。
 每个头都有自己的QKV
@@ -89,14 +88,14 @@ class MultiHeadAttention(nn.Module):
 
 
 ## Cross Attention
-![图片](https://docimg5.docs.qq.com/image/AgAALDBw6SuyQnfgYIZMbqsNXztWjXec.png?w=898&h=448)
+![img6](./imgs/006.png)
 在Decoder的 交叉注意力机制（Cross-Attention） 中，Q、K、V 的来源不同：
 - Query (Q)：来自 Decoder 的输入（目标序列）
 - Key(K)和Value(V)：来自 Encoder 的输出（源序列的上下文表示）
 这种设计使得 Decoder 能够根据 Encoder 的输出生成目标序列
 
 ## Decoder的MHA为什么要做Mask
-![图片](https://docimg2.docs.qq.com/image/AgAALDBw6StTV10IgcxGs6pBIXc0UUNP.png?w=673&h=674)
+![img7](./imgs/007.png)
 使用Mask主要是为了防止信息泄露
 - 防止信息泄露
     - 自回归生成：在生成任务中，Decoder需要逐个生成输出序列的每个元素。Mask确保在生成第t个元素时，只能看到前t−1个元素，防止模型利用未来信息
@@ -116,7 +115,7 @@ n方乘以d、n乘以d方
 - 并行计算 多头注意力机制可以并行计算多个注意力头，充分利用GPU的并行计算能力
 
 ## 为什么用点积注意力
-![图片](https://docimg3.docs.qq.com/image/AgAALDBw6SvlH_bZGjNOR5xuzF6UndFD.png?w=1535&h=823)
+![img8](./imgs/008.png)
 点积能够有效衡量两个向量的相似性。在注意力机制中，通过计算查询向量（Query）和键向量（Key）的点积，可以评估它们之间的相关性，从而决定注意力权重。而且
 - 点积在数学上更简单且易于优化，允许同时计算所有位置的注意力权重，便于并行计算
 - 加性注意力需要额外的全连接层和非线性变换，计算复杂度高，且不好并行
