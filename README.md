@@ -97,6 +97,7 @@ class MultiHeadAttention(nn.Module):
 
 ## Decoder的MHA为什么要做Mask
 ![img7](./imgs/007.png)
+
 使用Mask主要是为了防止信息泄露
 - 防止信息泄露
     - 自回归生成：在生成任务中，Decoder需要逐个生成输出序列的每个元素。Mask确保在生成第t个元素时，只能看到前t−1个元素，防止模型利用未来信息
