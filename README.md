@@ -237,8 +237,11 @@ self.linear2 = Linear(dim_feedforward, d_model)
 self.dropout = Dropout(dropout)
 ```
 其中，activation指激活函数，Transformer最开始用是ReLU，
+
 之后的模型对这部分有改进，依次是：
+
 ReLU → GELU → Swish(SiLU) → SwiGLU
+
 现在主流的LLM比如Llama、Qwen大多采用SwiGLU
 
 ## Transformer训练的时候主要是什么数据在使用显存
