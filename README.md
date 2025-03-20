@@ -227,6 +227,20 @@ class DecoderLayer:
         return x
 ```
 
+## FFN
+![img9](./imgs/009.png)
+
+```python
+self.linear1 = Linear(d_model, dim_feedforward)
+self.activation = Relu()
+self.linear2 = Linear(dim_feedforward, d_model)
+self.dropout = Dropout(dropout)
+```
+其中，activation指激活函数，Transformer最开始用是ReLU，
+之后的模型对这部分有改进，依次是：
+ReLU → GELU → Swish(SiLU) → SwiGLU
+现在主流的LLM比如Llama、Qwen大多采用SwiGLU
+
 ## Transformer训练的时候主要是什么数据在使用显存
 很奇怪的问题，以下答案仅做参考：模型权重、梯度、softmax的值...
 
